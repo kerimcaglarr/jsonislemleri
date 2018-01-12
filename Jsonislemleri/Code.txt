@@ -1,0 +1,44 @@
+import Foundation
+
+**//Swift 4 ile Json iþlemleri çooooook kolayalaþtý**
+struct Kampanya:Codable{
+
+    var baslik:String
+
+    var icerik:String
+
+}
+import UIKit
+
+let url = URL(string:myUrl)! // myUrl stringini url e dönüþtürdü
+
+let myData = try! Data(contentsOf:url)
+
+var jsonDecoder = JSONDecoder()
+
+var basliklar = [String]() **//Elemanlarý String türünde olacak boþ bir array tanýmladýk**
+
+class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+    
+    override func viewDidLoad() {
+
+        super.viewDidLoad()
+
+       **// Do any additional setup after loading the view, typically from a nib.**
+        
+        let kampanyalar = try? jsonDecoder.decode([Kampanya].self, from: myData)
+        
+        //dump(kampayalar?.first)
+        
+        if let kampanya = kampanyalar {
+
+            //print(kampanya)
+
+            for k in kampanya{
+
+                basliklar.append(k.baslik)
+            }
+            
+        }
+
+    }
